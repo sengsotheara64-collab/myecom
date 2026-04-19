@@ -10,16 +10,16 @@ import com.example.myecomapp.R
 import com.example.myecomapp.ui.activities.ShoppingActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-fun Fragment.getBottomNavView(): BottomNavigationView {
-    return (activity as ShoppingActivity).findViewById(R.id.bottomNavigation)
+fun Fragment.getBottomNavView(): BottomNavigationView? {
+    return (activity as? ShoppingActivity)?.findViewById(R.id.bottomNavigation)
 }
 
 fun Fragment.hideBottomNavView() {
-    getBottomNavView().visibility = View.GONE
+    getBottomNavView()?.visibility = View.GONE
 }
 
 fun Fragment.showBottomNavView() {
-    getBottomNavView().visibility = View.VISIBLE
+    getBottomNavView()?.visibility = View.VISIBLE
 }
 
 fun calculateOnViewColor(@ColorInt color: Int): Int {

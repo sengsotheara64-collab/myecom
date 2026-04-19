@@ -20,6 +20,7 @@ import com.example.myecomapp.utils.validations.validateEmail
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,10 +38,9 @@ import javax.inject.Inject
 class UserAccountViewModel @Inject constructor(
     private val firestore: FirebaseFirestore,
     private val firebaseAuth: FirebaseAuth,
-    private val storage: StorageReference,
     app: Application
-) : AndroidViewModel(app) {
-
+) : AndroidViewModel(app)
+{
     private val _user = MutableStateFlow<Resource<User>>(Resource.Unspecified())
     val user = _user.asStateFlow()
 
@@ -81,7 +81,7 @@ class UserAccountViewModel @Inject constructor(
             }
 
             if (imageUri == null) {
-                saveUserInformation(user, true)
+                saveUserInformation(user)
             } else {
                 saveUserInformationWithNewImage(user, imageUri)
             }
@@ -92,25 +92,21 @@ class UserAccountViewModel @Inject constructor(
         }
     }
 
-    private fun saveUserInformation(user: User, retrieveOldImage: Boolean) {
+    private fun saveUserInformation(user: User) {
         firestore.runTransaction { transaction ->
             val documentRef = firestore.collection(USER_COLLECTION)
                 .document(firebaseAuth.uid!!)
-
-            if (retrieveOldImage) {
-                val currentUser = transaction.get(documentRef).toObject(User::class.java)
-                currentUser?.let {
-                    val newUser = user.copy(
-                        firstName = user.firstName.ifEmpty { currentUser.firstName },
-                        lastName = user.lastName.ifEmpty { currentUser.lastName },
-                        email = user.email.ifEmpty { currentUser.email },
-                        imagePath = user.imagePath.ifEmpty { currentUser.imagePath }
-                    )
-                    transaction.set(documentRef, newUser)
-                }
-            } else {
-                transaction.set(documentRef, user)
+            val currentUser = transaction.get(documentRef).toObject(User::class.java)
+             currentUser?.let {
+                val newUser = user.copy(
+                    firstName = user.firstName.ifEmpty { currentUser.firstName },
+                    lastName = user.lastName.ifEmpty { currentUser.lastName },
+                    email = user.email.ifEmpty { currentUser.email },
+                    imagePath = user.imagePath.ifEmpty { currentUser.imagePath }
+                )
+                transaction.set(documentRef, newUser)
             }
+
         }
             .addOnSuccessListener {
                 viewModelScope.launch {
@@ -127,44 +123,54 @@ class UserAccountViewModel @Inject constructor(
     @Suppress("deprecation")
     private fun saveUserInformationWithNewImage(user: User, imageUri: Uri) {
         viewModelScope.launch {
+            _updateInfo.emit(Resource.Loading())
+
             try {
-                _updateInfo.emit(Resource.Loading())
+                com.cloudinary.android.MediaManager.get()
+                    .upload(imageUri)
+                    .option("folder", "profile_images")
+                    .option("public_id", "user_${firebaseAuth.uid}")
+                    .option("overwrite", true)
+                    .callback(object : com.cloudinary.android.callback.UploadCallback {
 
-                val bitmap = if (Build.VERSION.SDK_INT < 28) {
-                    MediaStore.Images.Media.getBitmap(
-                        getApplication<MyApplication>().contentResolver,
-                        imageUri
-                    )
-                } else {
-                    val source = ImageDecoder.createSource(
-                        getApplication<MyApplication>().contentResolver,
-                        imageUri
-                    )
-                    ImageDecoder.decodeBitmap(source)
-                }
+                        override fun onStart(requestId: String?) {}
 
-                val stream = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream)
+                        override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {}
 
-                val imageBytes = stream.toByteArray()
+                        override fun onSuccess(
+                            requestId: String?,
+                            resultData: MutableMap<Any?, Any?>?
+                        ) {
+                            val imageUrl = resultData?.get("secure_url").toString()
 
-                Log.d("UPLOAD", "bytes = ${imageBytes.size}")
+                            viewModelScope.launch {
+                                saveUserInformation(
+                                    user.copy(imagePath = imageUrl)
+                                )
+                            }
+                        }
 
-                val imageRef = Firebase.storage.reference.child(
-                    "profileImage/${FirebaseAuth.getInstance().uid}/${UUID.randomUUID()}.jpg"
-                )
+                        override fun onError(
+                            requestId: String?,
+                            error: com.cloudinary.android.callback.ErrorInfo?
+                        ) {
+                            viewModelScope.launch {
+                                _updateInfo.emit(
+                                    Resource.Error(error?.description ?: "Upload failed")
+                                )
+                            }
+                        }
 
-                val uploadTask = imageRef.putBytes(imageBytes).await()
-
-                val downloadUrl = uploadTask.storage.downloadUrl.await().toString()
-
-                saveUserInformation(user.copy(imagePath = downloadUrl), false)
-
-                _updateInfo.emit(Resource.Success(user))
+                        override fun onReschedule(
+                            requestId: String?,
+                            error: com.cloudinary.android.callback.ErrorInfo?
+                        ) {}
+                    })
+                    .dispatch()
 
             } catch (e: Exception) {
                 Log.e("UPLOAD_ERROR", e.message.toString())
-                _updateInfo.emit(Resource.Error(e.message ?: "Upload failed"))
+                _updateInfo.emit(Resource.Error(e.message ?: "Error"))
             }
         }
     }

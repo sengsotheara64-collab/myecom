@@ -78,32 +78,50 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:padding="16dp">
+                android:padding="10dp">
 
                 <TextView
                     android:id="@+id/step1"
                     style="@style/StepItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Pending" />
 
-                <View style="@style/StepLine"/>
+                <View
+                    style="@style/StepLine"
+                    android:layout_weight="1"/>
 
                 <TextView
                     android:id="@+id/step2"
                     style="@style/StepItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Confirmed" />
 
-                <View style="@style/StepLine"/>
+                <View
+                    style="@style/StepLine"
+                    android:layout_weight="1"/>
 
                 <TextView
                     android:id="@+id/step3"
                     style="@style/StepItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Shipped" />
 
-                <View style="@style/StepLine"/>
+                <View
+                    style="@style/StepLine"
+                    android:layout_weight="1"/>
 
                 <TextView
                     android:id="@+id/step4"
                     style="@style/StepItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Delivered" />
             </LinearLayout>
         </LinearLayout>

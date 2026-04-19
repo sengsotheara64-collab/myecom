@@ -25,9 +25,7 @@
             android:layout_marginVertical="4dp"
             android:contentDescription="@string/app_name"
             android:scaleType="centerCrop"
-            android:scaleX="1.8"
-            android:scaleY="1.8"
-            android:src="@mipmap/ic_launcher_foreground"
+            android:src="@drawable/icon_app"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

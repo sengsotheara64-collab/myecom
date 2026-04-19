@@ -60,6 +60,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
+            android:id="@+id/ivScan"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
@@ -70,6 +71,7 @@
             android:src="@drawable/ic_scan" />
 
         <ImageView
+            android:id="@+id/ivVoice"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"

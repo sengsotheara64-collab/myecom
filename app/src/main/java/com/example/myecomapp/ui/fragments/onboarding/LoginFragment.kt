@@ -92,11 +92,18 @@ class LoginFragment : Fragment() {
                             is Resource.Success -> {
                                 val snackbar = Snackbar.make(
                                     requireView(),
-                                    it.message.toString(),
+                                    it.data.toString(),
                                     Snackbar.LENGTH_SHORT
                                 )
+
                                 snackbar.animationMode = Snackbar.ANIMATION_MODE_FADE
-                                snackbar.setAnchorView(getBottomNavView())
+
+                                val bottomNav = getBottomNavView()
+
+                                if (bottomNav != null) {
+                                    snackbar.setAnchorView(bottomNav)
+                                }
+
                                 snackbar.show()
                             }
 

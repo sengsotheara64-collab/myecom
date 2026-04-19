@@ -8,7 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class FirebaseCommon(
     private val firestore: FirebaseFirestore,
-    private val firebaseAuth: FirebaseAuth
+    firebaseAuth: FirebaseAuth
 ) {
 
     private val cartCollection = firestore.collection(USER_COLLECTION)

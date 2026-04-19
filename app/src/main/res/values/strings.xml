@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ecom</string>
+    <string name="app_name">Ecom24</string>
     <string name="rightAddress">The Right Address\nFor Shopping\nAny Day</string>
     <string name="quality">It is now very easy to reach the best quality among the products on the internet!</string>
     <string name="start">Start</string>
@@ -65,7 +65,6 @@
     <string name="delete">Delete</string>
     <string name="save">Save</string>
     <string name="payment_methods">Payment Methods</string>
-    <string name="no_virtual_payment">Rushly does not support virtual payments yet. You can pay when you receive your order.</string>
     <string name="shipping_address">Shipping Address</string>
     <string name="place_order">Place Order</string>
     <string name="billing">Billing</string>

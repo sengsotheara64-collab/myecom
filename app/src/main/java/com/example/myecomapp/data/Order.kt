@@ -16,6 +16,7 @@ data class Order(
     val totalPrice: Float,
     val products: List<CartProduct>,
     val address: Address,
+    val paymentMethod: String = "COD",
     val date: String = SimpleDateFormat(
         "dd MMM yyyy",
         Locale.ENGLISH

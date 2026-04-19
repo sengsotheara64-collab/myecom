@@ -56,7 +56,7 @@ class RegisterFragment : Fragment() {
                 )
             }
 
-            // 🔥 Register Flow
+            // Register Flow
             viewLifecycleOwner.lifecycleScope.launch {
                 lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                     viewModel.register.collect { result ->
@@ -95,7 +95,7 @@ class RegisterFragment : Fragment() {
                 }
             }
 
-            // 🔥 Validation Flow (FIXED)
+            //  Validation Flow
             viewLifecycleOwner.lifecycleScope.launch {
                 lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                     viewModel.validation.collect { validation ->

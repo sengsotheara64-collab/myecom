@@ -2,11 +2,13 @@ package com.example.myecomapp.ui.dialogs
 
 import android.annotation.SuppressLint
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
 import com.example.myecomapp.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.auth.FirebaseAuth
 
 @SuppressLint("InflateParams")
 fun Fragment.showVerifyEmailDialog(
@@ -17,15 +19,17 @@ fun Fragment.showVerifyEmailDialog(
     dialog.setContentView(view)
     dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
     dialog.show()
-
-    val edEmail = view.findViewById<EditText>(R.id.edEmailAddress)
     val buttonResend = view.findViewById<AppCompatButton>(R.id.buttonSendVerifyEmail)
     val buttonClose = view.findViewById<AppCompatButton>(R.id.buttonCancelVerifyEmail)
+    val email = FirebaseAuth.getInstance().currentUser?.email
 
     buttonResend.setOnClickListener {
-        val email = edEmail.text.toString().trim()
-        onResendClick(email)
-        dialog.dismiss()
+        if (!email.isNullOrEmpty()) {
+            onResendClick(email)
+            dialog.dismiss()
+        } else {
+            Toast.makeText(context, "Email not available", Toast.LENGTH_SHORT).show()
+        }
     }
 
     buttonClose.setOnClickListener {

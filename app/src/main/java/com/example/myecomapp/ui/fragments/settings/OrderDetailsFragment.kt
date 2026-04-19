@@ -79,7 +79,7 @@ class OrderDetailsFragment : Fragment() {
                 OrderStatus.Delivered.status
             )
 
-            // 🔥 Determine current step
+            // Determine current step
             val currentStep = when (getOrderStatus(order.orderStatus)) {
                 is OrderStatus.Pending -> 0
                 is OrderStatus.Confirmed -> 1
@@ -88,7 +88,7 @@ class OrderDetailsFragment : Fragment() {
                 else -> 0
             }
 
-            // 🔥 Update UI step
+            // Update UI step
             fun updateStepUI(step: Int) {
                 val activeColor = ContextCompat.getColor(requireContext(), R.color.g_green)
                 val inactiveColor = ContextCompat.getColor(requireContext(), R.color.g_gray700)

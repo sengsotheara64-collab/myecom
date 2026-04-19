@@ -21,6 +21,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "CLOUDINARY_CLOUD_NAME", "\"${project.findProperty("CLOUDINARY_CLOUD_NAME")}\"")
+        buildConfigField("String", "CLOUDINARY_API_KEY", "\"${project.findProperty("CLOUDINARY_API_KEY")}\"")
+        buildConfigField("String", "CLOUDINARY_API_SECRET", "\"${project.findProperty("CLOUDINARY_API_SECRET")}\"")
     }
 
     buildTypes {
@@ -42,6 +46,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
     kapt {
         correctErrorTypes = true
@@ -97,4 +102,6 @@ dependencies {
 
     // Shimmer
     implementation("com.facebook.shimmer:shimmer:0.5.0")
+
+    implementation("com.cloudinary:cloudinary-android:2.3.1")
 }

@@ -24,6 +24,7 @@ import com.example.myecomapp.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import androidx.core.net.toUri
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
@@ -88,7 +89,7 @@ class ProfileFragment : Fragment() {
 
             layoutInformation.setOnClickListener {
                 val intent = Intent(Intent.ACTION_VIEW).apply {
-                    data = Uri.parse("https://github.com/Mahmud0808/Rushly")
+                    data = "https://github.com/sengsotheara64-collab/myecom.git".toUri()
                 }
                 startActivity(intent)
             }

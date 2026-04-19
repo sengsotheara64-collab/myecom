@@ -12,6 +12,7 @@ import com.example.myecomapp.data.Order
 import com.example.myecomapp.data.OrderStatus
 import com.example.myecomapp.data.getOrderStatus
 import com.example.myecomapp.databinding.RvItemOrderBinding
+import androidx.core.graphics.drawable.toDrawable
 
 class OrderListAdapter : RecyclerView.Adapter<OrderListAdapter.OrdersViewHolder>() {
 
@@ -27,37 +28,33 @@ class OrderListAdapter : RecyclerView.Adapter<OrderListAdapter.OrdersViewHolder>
                 imageOrderState.setImageDrawable(
                     when (getOrderStatus(order.orderStatus)) {
                         is OrderStatus.Pending -> {
-                            ColorDrawable(
-                                ContextCompat.getColor(
-                                    itemView.context,
-                                    R.color.g_blue_gray200
-                                )
-                            )
+                            ContextCompat.getColor(
+                                itemView.context,
+                                R.color.g_blue_gray200
+                            ).toDrawable()
                         }
 
                         is OrderStatus.Confirmed -> {
-                            ColorDrawable(
-                                ContextCompat.getColor(
-                                    itemView.context,
-                                    R.color.g_orange_yellow
-                                )
-                            )
+                            ContextCompat.getColor(
+                                itemView.context,
+                                R.color.g_orange_yellow
+                            ).toDrawable()
                         }
 
                         is OrderStatus.Delivered -> {
-                            ColorDrawable(ContextCompat.getColor(itemView.context, R.color.g_green))
+                            ContextCompat.getColor(itemView.context, R.color.g_green).toDrawable()
                         }
 
                         is OrderStatus.Shipped -> {
-                            ColorDrawable(ContextCompat.getColor(itemView.context, R.color.g_green))
+                            ContextCompat.getColor(itemView.context, R.color.g_green).toDrawable()
                         }
 
                         is OrderStatus.Canceled -> {
-                            ColorDrawable(ContextCompat.getColor(itemView.context, R.color.g_red))
+                            ContextCompat.getColor(itemView.context, R.color.g_red).toDrawable()
                         }
 
                         is OrderStatus.Returned -> {
-                            ColorDrawable(ContextCompat.getColor(itemView.context, R.color.g_red))
+                            ContextCompat.getColor(itemView.context, R.color.g_red).toDrawable()
                         }
                     }
                 )

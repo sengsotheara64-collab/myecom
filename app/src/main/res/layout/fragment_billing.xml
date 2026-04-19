@@ -34,8 +34,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/semi_black"
-                    tools:ignore="ContentDescription" />
+                    app:tint="@color/semi_black" />
 
                 <TextView
                     android:id="@+id/tvBilling"
@@ -76,18 +75,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbarBilling" />
 
-        <TextView
-            android:id="@+id/tvPaymentExplanation"
+        <RadioGroup
+            android:id="@+id/rgPaymentMethod"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
-            android:fontFamily="@font/sf_pro_display"
-            android:text="@string/no_virtual_payment"
-            android:textColor="@color/semi_black"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/tvPaymentMethods"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvPaymentMethods" />
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rbCOD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cash on Delivery (COD)"
+                android:checked="true"
+                android:textSize="14sp"
+                android:padding="10dp" />
+        </RadioGroup>
 
         <View
             android:id="@+id/topLine"
@@ -96,9 +103,9 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/white_background"
             android:backgroundTint="@color/g_line"
-            app:layout_constraintEnd_toEndOf="@id/tvPaymentExplanation"
-            app:layout_constraintStart_toStartOf="@id/tvPaymentExplanation"
-            app:layout_constraintTop_toBottomOf="@id/tvPaymentExplanation" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rgPaymentMethod" />
 
         <ImageView
             android:id="@+id/imageLocation"
@@ -106,10 +113,9 @@
             android:layout_height="24dp"
             android:layout_marginTop="10dp"
             android:src="@drawable/ic_location"
-            app:layout_constraintStart_toStartOf="@id/tvPaymentExplanation"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/topLine"
-            app:tint="@color/semi_black"
-            tools:ignore="ContentDescription" />
+            app:tint="@color/semi_black" />
 
         <TextView
             android:id="@+id/tvShippingAddress"
@@ -130,10 +136,9 @@
             android:layout_height="24dp"
             android:src="@drawable/ic_add"
             app:layout_constraintBottom_toBottomOf="@id/tvShippingAddress"
-            app:layout_constraintEnd_toEndOf="@id/tvPaymentExplanation"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tvShippingAddress"
-            app:tint="@color/semi_black"
-            tools:ignore="ContentDescription" />
+            app:tint="@color/semi_black" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvAddress"
@@ -156,8 +161,8 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/white_background"
             android:backgroundTint="@color/g_line"
-            app:layout_constraintEnd_toEndOf="@id/tvPaymentExplanation"
-            app:layout_constraintStart_toStartOf="@id/tvPaymentExplanation"
+            app:layout_constraintEnd_toEndOf="@id/rgPaymentMethod"
+            app:layout_constraintStart_toStartOf="@id/rgPaymentMethod"
             app:layout_constraintTop_toBottomOf="@id/rvAddress" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -182,8 +187,8 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/white_background"
             android:backgroundTint="@color/g_line"
-            app:layout_constraintEnd_toEndOf="@id/tvPaymentExplanation"
-            app:layout_constraintStart_toStartOf="@id/tvPaymentExplanation"
+            app:layout_constraintEnd_toEndOf="@id/rgPaymentMethod"
+            app:layout_constraintStart_toStartOf="@id/rgPaymentMethod"
             app:layout_constraintTop_toBottomOf="@id/rvProducts" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -192,8 +197,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:background="@drawable/total_box_background"
-            app:layout_constraintEnd_toEndOf="@id/tvPaymentExplanation"
-            app:layout_constraintStart_toStartOf="@id/tvPaymentExplanation"
+            app:layout_constraintEnd_toEndOf="@id/rgPaymentMethod"
+            app:layout_constraintStart_toStartOf="@id/rgPaymentMethod"
             app:layout_constraintTop_toBottomOf="@id/bottomLine">
 
             <TextView

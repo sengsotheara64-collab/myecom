@@ -67,6 +67,19 @@ class UserAccountFragment : Fragment() {
 
             buttonSave.setOnClickListener {
                 binding.apply {
+                    val updates = mutableMapOf<String, Any>()
+
+                    if (edFirstName.text.toString().trim().isNotEmpty()) {
+                        updates["firstName"] = edFirstName.text.toString().trim()
+                    }
+
+                    if (edLastName.text.toString().trim().isNotEmpty()) {
+                        updates["lastName"] = edLastName.text.toString().trim()
+                    }
+
+                    if (edEmail.text.toString().trim().isNotEmpty()) {
+                        updates["email"] = edEmail.text.toString().trim()
+                    }
                     viewModel.updateUser(
                         User(
                             firstName = edFirstName.text.toString().trim(),
