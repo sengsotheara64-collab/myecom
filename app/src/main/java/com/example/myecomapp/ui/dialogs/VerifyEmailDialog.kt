@@ -10,8 +10,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 
-@SuppressLint("InflateParams")
 fun Fragment.showVerifyEmailDialog(
+    email: String,
     onResendClick: (String) -> Unit
 ) {
     val dialog = BottomSheetDialog(requireContext(), R.style.DialogStyle)
@@ -19,12 +19,12 @@ fun Fragment.showVerifyEmailDialog(
     dialog.setContentView(view)
     dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
     dialog.show()
+
     val buttonResend = view.findViewById<AppCompatButton>(R.id.buttonSendVerifyEmail)
     val buttonClose = view.findViewById<AppCompatButton>(R.id.buttonCancelVerifyEmail)
-    val email = FirebaseAuth.getInstance().currentUser?.email
 
     buttonResend.setOnClickListener {
-        if (!email.isNullOrEmpty()) {
+        if (email.isNotEmpty()) {
             onResendClick(email)
             dialog.dismiss()
         } else {

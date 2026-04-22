@@ -42,8 +42,8 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.getString("email")?.let {
-            showVerifyEmailDialog {
+        arguments?.getString("email")?.let { email ->
+            showVerifyEmailDialog(email) {
                 viewModel.resendVerificationMail()
             }
         }

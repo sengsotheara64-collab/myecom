@@ -42,30 +42,48 @@
     <TextView
         android:id="@+id/tvTitle"
         style="@style/h4"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/tvRightAddressMarginTop"
+        android:layout_marginTop="24dp"
         android:gravity="center"
-        android:text="@string/rightAddress"
+        android:text="Discover Quality Furniture"
         android:textAlignment="center"
-        android:textSize="35sp"
-        app:layout_constraintBottom_toBottomOf="@id/guidelineEllipseBottom"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@color/semi_black"
         app:layout_constraintEnd_toEndOf="@id/guidelineEllipseRight"
         app:layout_constraintStart_toStartOf="@id/guidelineEllipseLeft"
         app:layout_constraintTop_toTopOf="@id/guidelineLeftTexture" />
+
+    <TextView
+        android:id="@+id/tvSubtitle"
+        style="@style/h2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Premium • Modern • Affordable"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textColor="#888888"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEllipseRight"
+        app:layout_constraintStart_toStartOf="@id/guidelineEllipseLeft"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
     <TextView
         android:id="@+id/tvDesc"
         style="@style/h2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="14dp"
         android:gravity="center"
-        android:text="@string/quality"
+        android:text="Shop high-quality furniture and home accessories designed for comfort, durability, and style. Find everything you need in one place."
         android:textAlignment="center"
+        android:textSize="14sp"
+        android:textColor="#666666"
         app:layout_constraintEnd_toEndOf="@id/guidelineEllipseRight"
         app:layout_constraintStart_toStartOf="@id/guidelineEllipseLeft"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitle" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonStart"
