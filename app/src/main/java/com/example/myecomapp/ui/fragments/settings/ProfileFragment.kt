@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -82,9 +83,27 @@ class ProfileFragment : Fragment() {
             }
 
             layoutChangePassword.setOnClickListener {
-                showResetPasswordDialog {
-                    loginViewModel.resetPassword(email = it)
+                showResetPasswordDialog { inputEmail ->
+
+                    val currentEmail = FirebaseAuth.getInstance().currentUser?.email
+
+                    if (currentEmail.isNullOrEmpty()) {
+                        Toast.makeText(requireContext(), "User not logged in", Toast.LENGTH_SHORT)
+                            .show()
+                        return@showResetPasswordDialog
+                    }
+
+                    if (inputEmail != currentEmail) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Email does not match your account",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        loginViewModel.resetPassword(inputEmail, requireContext())
+                    }
                 }
+
             }
 
             layoutInformation.setOnClickListener {

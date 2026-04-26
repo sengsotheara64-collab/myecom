@@ -103,5 +103,6 @@ dependencies {
     // Shimmer
     implementation("com.facebook.shimmer:shimmer:0.5.0")
 
+    // CLOUDINARY
     implementation("com.cloudinary:cloudinary-android:2.3.1")
 }

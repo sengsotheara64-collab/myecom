@@ -40,6 +40,21 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
+            facebookRegister.setOnClickListener {
+                Toast.makeText(
+                    requireContext(),
+                    "Coming soon",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            googleRegister.setOnClickListener {
+                Toast.makeText(
+                    requireContext(),
+                    "Coming soon",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
 
             tvLogIn.setOnClickListener {
                 findNavController().navigate(R.id.action_registerFragment_to_loginFragment)

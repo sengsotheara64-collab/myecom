@@ -62,7 +62,7 @@ class LoginFragment : Fragment() {
 
             tvForgotPasswordLogin.setOnClickListener {
                 showResetPasswordDialog {
-                    viewModel.resetPassword(email = it)
+                    viewModel.resetPassword(email = it, requireContext())
                 }
             }
 

@@ -1,5 +1,6 @@
 package com.example.myecomapp.firebase
 
+import android.util.Log
 import com.example.myecomapp.data.CartProduct
 import com.example.myecomapp.utils.Constants.CART_COLLECTION
 import com.example.myecomapp.utils.Constants.USER_COLLECTION
@@ -12,21 +13,41 @@ class FirebaseCommon(
 ) {
 
     private val cartCollection = firestore.collection(USER_COLLECTION)
-        .document(firebaseAuth.uid!!)
+        .document(firebaseAuth.currentUser?.uid ?: throw Exception("User not logged in"))
         .collection(CART_COLLECTION)
 
     fun addProductToCart(
         cartProduct: CartProduct,
         onResult: (CartProduct?, Exception?) -> Unit
     ) {
-        cartCollection.document()
-            .set(cartProduct)
-            .addOnSuccessListener {
-                onResult(cartProduct, null)
-            }
-            .addOnFailureListener {
-                onResult(null, it)
-            }
+        val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+        val user = firebaseAuth.currentUser
+
+        if (user == null) {
+            onResult(null, Exception("User not authenticated"))
+            return
+        }
+
+        user.getIdToken(true).addOnSuccessListener {
+
+            val cartCollection = firestore.collection(USER_COLLECTION)
+                .document(user.uid)
+                .collection(CART_COLLECTION)
+
+            cartCollection.document()
+                .set(cartProduct)
+                .addOnSuccessListener {
+                    Log.d("CART", "SUCCESS ADD")
+                    onResult(cartProduct, null)
+                }
+                .addOnFailureListener {
+                    Log.e("CART", "FAILED ADD", it)
+                    onResult(null, it)
+                }
+
+        }.addOnFailureListener {
+            onResult(null, it)
+        }
     }
 
     fun increaseQuantity(

@@ -1,5 +1,7 @@
 package com.example.myecomapp.ui.viewmodels
 
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myecomapp.utils.validations.LoginRegisterValidation
@@ -78,7 +80,7 @@ class LoginViewModel @Inject constructor(
         return emailValidation is LoginRegisterValidation.Valid && passwordValidation
     }
 
-    fun resetPassword(email: String) {
+    fun resetPassword(email: String, context: Context) {
         viewModelScope.launch {
             _resetPassword.emit(Resource.Loading())
         }
@@ -87,6 +89,11 @@ class LoginViewModel @Inject constructor(
             .addOnSuccessListener {
                 viewModelScope.launch {
                     _resetPassword.emit(Resource.Success("Password reset email sent"))
+                    Toast.makeText(
+                        context,
+                        "Reset email sent",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
             .addOnFailureListener {
