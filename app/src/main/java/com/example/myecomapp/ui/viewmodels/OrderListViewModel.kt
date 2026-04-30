@@ -33,41 +33,29 @@ class OrderListViewModel @Inject constructor(
     }
 
     private fun getMyOrders() {
+        val userId = firebaseAuth.currentUser?.uid
+            ?: run {
+                viewModelScope.launch {
+                    _myOrders.emit(Resource.Error("User not logged in"))
+                }
+                return
+            }
+
         viewModelScope.launch {
             _myOrders.emit(Resource.Loading())
         }
 
         firestore.collection(USER_COLLECTION)
-            .document(firebaseAuth.uid!!)
-            .collection(ORDER_COLLECTION)
-            .orderBy("timestamp", Query.Direction.DESCENDING)
-            .get()
-            .addOnSuccessListener {
-                val orders = it.toObjects(Order::class.java)
-                viewModelScope.launch {
-                    _myOrders.emit(Resource.Success(orders))
-                }
-            }
-            .addOnFailureListener {
-                viewModelScope.launch {
-                    _myOrders.emit(Resource.Error(it.message.toString()))
-                }
-            }
-
-        firestore.collection(USER_COLLECTION)
-            .document(firebaseAuth.uid!!)
+            .document(userId)
             .collection(ORDER_COLLECTION)
             .orderBy("timestamp", Query.Direction.DESCENDING)
             .addSnapshotListener { value, error ->
-                if (error != null) {
-                    viewModelScope.launch {
-                        _myOrders.emit(Resource.Error(error.message.toString()))
-                    }
-                } else {
-                    value?.let {
-                        viewModelScope.launch {
-                            _myOrders.emit(Resource.Success(it.toObjects(Order::class.java)))
-                        }
+                viewModelScope.launch {
+                    if (error != null) {
+                        _myOrders.emit(Resource.Error(error.message ?: "Error"))
+                    } else {
+                        val orders = value?.toObjects(Order::class.java) ?: emptyList()
+                        _myOrders.emit(Resource.Success(orders))
                     }
                 }
             }
@@ -80,31 +68,13 @@ class OrderListViewModel @Inject constructor(
 
         firestore.collection(ORDER_COLLECTION)
             .orderBy("timestamp", Query.Direction.DESCENDING)
-            .get()
-            .addOnSuccessListener {
-                val orders = it.toObjects(Order::class.java)
-                viewModelScope.launch {
-                    _allOrders.emit(Resource.Success(orders))
-                }
-            }
-            .addOnFailureListener {
-                viewModelScope.launch {
-                    _allOrders.emit(Resource.Error(it.message.toString()))
-                }
-            }
-
-        firestore.collection(ORDER_COLLECTION)
-            .orderBy("timestamp", Query.Direction.DESCENDING)
             .addSnapshotListener { value, error ->
-                if (error != null) {
-                    viewModelScope.launch {
-                        _allOrders.emit(Resource.Error(error.message.toString()))
-                    }
-                } else {
-                    value?.let {
-                        viewModelScope.launch {
-                            _allOrders.emit(Resource.Success(it.toObjects(Order::class.java)))
-                        }
+                viewModelScope.launch {
+                    if (error != null) {
+                        _allOrders.emit(Resource.Error(error.message ?: "Error"))
+                    } else {
+                        val orders = value?.toObjects(Order::class.java) ?: emptyList()
+                        _allOrders.emit(Resource.Success(orders))
                     }
                 }
             }
