@@ -59,28 +59,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ImageView
-            android:id="@+id/ivScan"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/search_box_background"
-            android:backgroundTint="@color/g_search_and_icons"
-            android:contentDescription="@string/scan"
-            android:padding="10dp"
-            android:src="@drawable/ic_scan" />
-
-        <ImageView
-            android:id="@+id/ivVoice"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/search_box_background"
-            android:backgroundTint="@color/g_search_and_icons"
-            android:contentDescription="@string/voice_input"
-            android:padding="10dp"
-            android:src="@drawable/ic_microphone" />
-
     </LinearLayout>
 
     <FrameLayout

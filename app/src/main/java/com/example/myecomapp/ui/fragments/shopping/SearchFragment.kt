@@ -91,21 +91,6 @@ class SearchFragment : Fragment() {
                 }
             }
 
-            ivScan.setOnClickListener {
-                Toast.makeText(
-                    requireContext(),
-                    "Coming soon",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-            ivVoice.setOnClickListener {
-                Toast.makeText(
-                    requireContext(),
-                    "Coming soon",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
             viewLifecycleOwner.lifecycleScope.launch {
                 lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                     viewModel.allProducts.collectLatest {

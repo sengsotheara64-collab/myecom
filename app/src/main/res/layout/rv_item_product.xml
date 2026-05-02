@@ -17,7 +17,7 @@
             android:id="@+id/imgProduct"
             android:layout_width="114dp"
             android:layout_height="108dp"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -44,18 +44,6 @@
                 android:textColor="@color/semi_black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/ivProductFavorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="5dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_favorite"
-                app:tint="@color/g_blue_gray200"
-                tools:ignore="ContentDescription" />
-
         </LinearLayout>
 
         <TextView
